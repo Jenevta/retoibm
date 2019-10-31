@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  nginx: 
+    build: nginx 
+    container_name: ibm_nginx
+    ports:
+      - 80:80
+      - 443:443
+  
+  api:
+    build: backend
+    container_name: ibm_backend
+    healthcheck:
+      test: curl --fail -s http:localhost:80/|| exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3 
+
